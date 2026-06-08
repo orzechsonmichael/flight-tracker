@@ -5,53 +5,80 @@ api_key = os.environ["RAPIDAPI_KEY"]
 
 url = "https://google-flights2.p.rapidapi.com/api/v1/searchFlights"
 
-querystring = {
-    "departure_id": "BER",
-    "arrival_id": "NRT",
-    "outbound_date": "2026-10-09",
-    "return_date": "2026-10-24",
-    "travel_class": "ECONOMY",
-    "adults": "2",
-    "currency": "PLN",
-    "country_code": "PL",
-    "language_code": "pl",
-    "search_type": "cheap"
-}
-
 headers = {
     "X-RapidAPI-Key": api_key,
     "X-RapidAPI-Host": "google-flights2.p.rapidapi.com"
 }
 
-response = requests.get(
-    url,
-    headers=headers,
-    params=querystring,
-    timeout=60
-)
+searches = [
+    {
+        "name": "WAW-NRT",
+        "departure_id": "WAW",
+        "arrival_id": "NRT",
+        "outbound_date": "2027-05-07",
+        "return_date": "2027-05-21",
+    },
+    {
+        "name": "BER-NRT",
+        "departure_id": "BER",
+        "arrival_id": "NRT",
+        "outbound_date": "2027-05-07",
+        "return_date": "2027-05-21",
+    },
+    {
+        "name": "BER-HND",
+        "departure_id": "BER",
+        "arrival_id": "HND",
+        "outbound_date": "2027-05-07",
+        "return_date": "2027-05-21",
+    },
+]
 
-data = response.json()
+results = []
 
-print(response.status_code)
-print(data)
+for search in searches:
 
-flights = data["data"]["itineraries"]["topFlights"]
+    querystring = {
+        "departure_id": search["departure_id"],
+        "arrival_id": search["arrival_id"],
+        "outbound_date": search["outbound_date"],
+        "return_date": search["return_date"],
+        "travel_class": "ECONOMY",
+        "adults": "2",
+        "currency": "PLN",
+        "country_code": "PL",
+        "language_code": "en-US",
+        "search_type": "cheap"
+    }
 
-if not flights:
-    message = "❌ Nie znaleziono lotów."
-else:
-    cheapest = min(flights, key=lambda x: x["price"])
+    response = requests.get(
+        url,
+        headers=headers,
+        params=querystring,
+        timeout=60
+    )
 
-    message = f"""
-🇯🇵 TEST LOTÓW
+    data = response.json()
 
-BER → NRT
+    try:
+        flights = data["data"]["itineraries"]["topFlights"]
 
-Cena: {cheapest['price']} PLN
-Czas podróży: {cheapest['duration']['text']}
-Wylot: {cheapest['departure_time']}
-Przylot: {cheapest['arrival_time']}
-"""
+        if flights:
+            cheapest = min(flights, key=lambda x: x["price"])
+            results.append(
+                f"{search['name']} -> {cheapest['price']} PLN"
+            )
+        else:
+            results.append(
+                f"{search['name']} -> BRAK LOTÓW"
+            )
+
+    except Exception:
+        results.append(
+            f"{search['name']} -> BŁĄD"
+        )
+
+message = "🇯🇵 TEST WIELU TRAS\n\n" + "\n".join(results)
 
 webhook = os.environ["DISCORD_WEBHOOK_URL"]
 
