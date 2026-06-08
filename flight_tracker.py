@@ -15,22 +15,22 @@ searches = [
         "name": "WAW-NRT",
         "departure_id": "WAW",
         "arrival_id": "NRT",
-        "outbound_date": "2027-05-07",
-        "return_date": "2027-05-21",
+        "outbound_date": "2026-10-10",
+"return_date": "2026-10-24",
     },
     {
         "name": "BER-NRT",
         "departure_id": "BER",
         "arrival_id": "NRT",
-        "outbound_date": "2027-05-07",
-        "return_date": "2027-05-21",
+"outbound_date": "2026-10-10",
+"return_date": "2026-10-24",
     },
     {
         "name": "BER-HND",
         "departure_id": "BER",
         "arrival_id": "HND",
-        "outbound_date": "2027-05-07",
-        "return_date": "2027-05-21",
+   "outbound_date": "2026-10-10",
+"return_date": "2026-10-24",
     },
 ]
 
