@@ -14,7 +14,7 @@ querystring = {
     "adults": "2",
     "currency": "PLN",
     "country_code": "PL",
-    "language_code": "pl-PL",
+    "language_code": "pl",
     "search_type": "cheap"
 }
 
