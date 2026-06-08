@@ -32,6 +32,9 @@ response = requests.get(
 
 data = response.json()
 
+print(response.status_code)
+print(data)
+
 flights = data["data"]["itineraries"]["topFlights"]
 
 if not flights:
