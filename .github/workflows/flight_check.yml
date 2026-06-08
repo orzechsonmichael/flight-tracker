@@ -17,3 +17,5 @@ jobs:
       - run: pip install -r requirements.txt
 
       - run: python flight_tracker.py
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
