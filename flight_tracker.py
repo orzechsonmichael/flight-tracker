@@ -1,0 +1,1 @@
+print("Flight Tracker działa!")
