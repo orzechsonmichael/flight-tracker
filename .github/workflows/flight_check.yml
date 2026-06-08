@@ -15,7 +15,9 @@ jobs:
           python-version: "3.12"
 
       - run: pip install -r requirements.txt
-
+      
       - run: python flight_tracker.py
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
+          RAPIDAPI_HOST: ${{ secrets.RAPIDAPI_HOST }}
